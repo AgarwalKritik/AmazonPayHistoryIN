@@ -19,7 +19,7 @@ The **Amazon India Payment Details Exporter** is a JavaScript utility that extra
 ## Setup
 
 First of all clone this repository using
-```git clone https://github.com/dishapatel010/AmazonPayHistoryIN.git```
+```git clone https://github.com/AgarwalKritik/AmazonPayHistoryIN.git```
 
 OR download it as zip file directly
 
