@@ -26,13 +26,13 @@ OR download it as zip file directly
 ### _Google Chrome_
 1. Launch the Google Chrome browser.
 2. Access Extensions Page:
-   2.1 Click on the three vertical dots (menu) in the upper right corner.
-   2.2 Go to More Tools > Extensions.
+  2.1 Click on the three vertical dots (menu) in the upper right corner.
+  2.2 Go to More Tools > Extensions.
 3. Enable Developer Mode: In the upper right corner of the Extensions page, toggle the Developer mode switch to ON.
 4. Load Unpacked Extension:
-   4.1 Click on the Load unpacked button.
-   4.2 Navigate to the folder where your extension files (like manifest.json, popup.html, etc.) are located.
-   4.3 Select the folder and click Open.
+  4.1 Click on the Load unpacked button.
+  4.2 Navigate to the folder where your extension files (like manifest.json, popup.html, etc.) are located.
+  4.3 Select the folder and click Open.
 5. Your extension should now appear in the list of installed extensions. You can click on the icon to test it.
 
  ------
@@ -40,15 +40,15 @@ OR download it as zip file directly
 ### _Mozilla Firefox_
 1. Launch the Mozilla Firefox browser.
 2. Access Add-ons Manager:
-   2.1 Click on the three horizontal lines (menu) in the upper right corner.
-   2.2 Select Add-ons and Themes.
+  2.1 Click on the three horizontal lines (menu) in the upper right corner.
+  2.2 Select Add-ons and Themes.
 3. Enable Debugging:
-   3.1 In the Add-ons Manager, click on the gear icon (⚙️) in the top right corner.
-   3.2 Select Debug Add-ons.
+  3.1 In the Add-ons Manager, click on the gear icon (⚙️) in the top right corner.
+  3.2 Select Debug Add-ons.
 4. Load Temporary Add-on:
-   4.1 Click on the Load Temporary Add-on button.
-   4.2 Navigate to the folder where your extension files are located.
-   4.3 Select any file (e.g., manifest.json) and click Open.
+  4.1 Click on the Load Temporary Add-on button.
+  4.2 Navigate to the folder where your extension files are located.
+  4.3 Select any file (e.g., manifest.json) and click Open.
 5. Your extension will now be loaded temporarily, and you can test it directly from the browser.
 
 ## Usage
