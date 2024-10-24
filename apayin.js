@@ -23,6 +23,7 @@
  * - v1.0.0 - Initial release.
  * - Grouping Transactions by Month
  * - Extension Support by @AgarwalKritik
+ * - v1.1.0 - Months, Extension support
  */
 
 // Function to create an export button on the page
