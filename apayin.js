@@ -8,12 +8,12 @@
  * @author Nikhil - @dishapatel010
  *
  * @usage
- * 1. Navigate to the Amazon India Payment History page: 
+ * 1. Ensure the Amazon Pay India History Exporter extension is installed in your browser.
+ * 2. Navigate to the Amazon India Payment History page: 
  *    https://www.amazon.in/pay/history
- * 2. Scroll down to load all transactions until the last transaction you want to export is visible.
- * 3. Open your browser's Developer Console (F12 or right-click → Inspect).
- * 4. Copy and paste this script into the console and press Enter.
- * 5. An HTML file containing the payment details will be downloaded automatically.
+ * 3. Scroll down to load all transactions until the last transaction you want to export is visible.
+ * 4. Click on the "Export Payment History" button provided by the extension.
+ * 5. The script will automatically extract the payment history and prompt you to download it as an HTML file.
  *
  * @note 
  * Ensure that you are logged into your Amazon account to access the payment history.
@@ -21,9 +21,32 @@
  * 
  * @changelog
  * - v1.0.0 - Initial release.
+ * - Grouping Transactions by Month
+ * - Extension Support by @AgarwalKritik
+ * - v1.1.0 - Months, Extension support
  */
 
+// Function to create an export button on the page
+function createExportButton() {
+    const button = document.createElement('button');
+    button.innerText = 'Export Payment History';
+    button.style.position = 'fixed'; // Fixed position to stay in view while scrolling
+    button.style.bottom = '20px';
+    button.style.right = '20px';
+    button.style.padding = '10px';
+    button.style.backgroundColor = '#232f3e'; // Amazon Gray
+    button.style.color = '#ffffff'; // White text color
+    button.style.border = 'none';
+    button.style.borderRadius = '5px';
+    button.style.cursor = 'pointer';
+    button.style.zIndex = 1000; // Ensure it appears above other content
 
+    document.body.appendChild(button);
+
+    button.addEventListener('click', exportPaymentDetailsAsHTML);
+}
+
+// Function to extract and export payment transaction details as an HTML file
 function exportPaymentDetailsAsHTML() {
     const transactionElements = document.querySelectorAll('.a-expander-container');
 
@@ -49,6 +72,7 @@ function exportPaymentDetailsAsHTML() {
                     .gift-received { background-color: #d4f0c2; } /* Light green-yellow mix for Received from (Gift Cards) */
                     .white-row { background-color: #ffffff; } /* White background for N/A transactions */
                     .strikethrough { text-decoration: line-through; } /* Strike-through style */
+                    h2 { margin-top: 20px; } /* Month title style */
                     @media screen and (max-width: 600px) {
                         table, thead, tbody, th, td, tr { display: block; }
                         th { position: absolute; left: -9999px; }
@@ -66,32 +90,34 @@ function exportPaymentDetailsAsHTML() {
                 </style>
             </head>
             <body>
-                <h1>Payment Transaction Details</h1>
-                <table>
-                    <tr>
-                        <th>Transaction Type</th>
-                        <th>Paid To / Received From</th>
-                        <th>Payment Method</th>
-                        <th>Date & Time</th>
-                        <th>Amount</th>
-                        <th>Payee UPI ID</th>
-                        <th>Paid Using</th>
-                        <th>Reference ID</th>
-                    </tr>`;
+                <h1>Payment Transaction Details</h1>`;
+
+    // Object to hold transactions by month
+    const transactionsByMonth = {};
 
     // Loop through each transaction element
     transactionElements.forEach(transaction => {
+        const dateTimeElement = transaction.querySelector('.payment-details-desktop + .a-size-base');
+        if (!dateTimeElement) return; // Skip if there's no date
+
+        const dateTimeText = dateTimeElement.innerText;
+        const date = new Date(dateTimeText);
+        const monthYear = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+
+        // Initialize array for this month if it doesn't exist
+        if (!transactionsByMonth[monthYear]) {
+            transactionsByMonth[monthYear] = [];
+        }
+
+        // Collect transaction details
         const paidToElement = transaction.querySelector('.pad-header-text .a-size-medium');
         const paymentMethodElement = transaction.querySelector('.payment-details-desktop .a-size-base.a-color-tertiary');
-        const dateTimeElement = transaction.querySelector('.payment-details-desktop + .a-size-base');
 
         // Capture both normal and strikethrough amounts
         const normalAmountElement = transaction.querySelector('.a-size-medium.a-color-price, .a-size-medium.a-color-attainable');
         const struckThroughAmountElement = transaction.querySelector('.a-size-medium.a-color-tertiary.a-text-strike, .a-size-medium.a-color-attainable');
 
         let paidTo = paidToElement ? paidToElement.innerText : 'N/A';
-
-        // Determine the amount based on available elements
         let amount = normalAmountElement ? normalAmountElement.innerText : 'N/A';
         let isStruckThrough = struckThroughAmountElement ? struckThroughAmountElement.innerText : null;
 
@@ -153,30 +179,46 @@ function exportPaymentDetailsAsHTML() {
             rowClass = transactionType === "Received from" ? "received" : "paid";
         }
 
-        // Append a new row for each transaction with conditional styling
-        htmlContent += `
-                <tr class="${rowClass}">
-                    <td>${transactionType}</td>
-                    <td>${paidTo}</td>
-                    <td>${paymentMethodElement ? paymentMethodElement.innerText : 'N/A'}</td>
-                    <td>${dateTimeElement ? dateTimeElement.innerText : 'N/A'}</td>
-                    <td>${amount}</td>
-                    <td>${upiId}</td>
-                    <td>${paidUsing}</td>
-                    <td>${referenceId}</td>
-                </tr>`;
+        // Append transaction to the month array
+        transactionsByMonth[monthYear].push(`
+            <tr class="${rowClass}">
+                <td>${transactionType}</td>
+                <td>${paidTo}</td>
+                <td>${paymentMethodElement ? paymentMethodElement.innerText : 'N/A'}</td>
+                <td>${dateTimeText}</td>
+                <td>${amount}</td>
+                <td>${upiId}</td>
+                <td>${paidUsing}</td>
+                <td>${referenceId}</td>
+            </tr>`);
     });
 
+    // Append transactions for each month to the HTML content
+    for (const month in transactionsByMonth) {
+        htmlContent += `<h2>${month}</h2><table><tr>
+                <th>Transaction Type</th>
+                <th>Paid To / Received From</th>
+                <th>Payment Method</th>
+                <th>Date & Time</th>
+                <th>Amount</th>
+                <th>Payee UPI ID</th>
+                <th>Paid Using</th>
+                <th>Reference ID</th>
+            </tr>`;
+        transactionsByMonth[month].forEach(transactionRow => {
+            htmlContent += transactionRow;
+        });
+        htmlContent += `</table>`;
+    }
+
     // Add footer to the HTML content
-    const currentDate = new Date().toLocaleDateString();
     htmlContent += `
-                </table>
-                <footer>
-                    <p>Exported on: ${currentDate}</p>
-                    <p>AmazonPayHistoryIN - <a href="https://github.com/dishapatel010/AmazonPayHistoryIN" target="_blank">@dishapatel010</a></p>
-                </footer>
-            </body>
-        </html>`;
+            <footer>
+                <p>Exported on: ${new Date().toLocaleString()}</p>
+                <p>AmazonPayHistoryIN - <a href="https://github.com/dishapatel010/AmazonPayHistoryIN" target="_blank">@dishapatel010</a></p>
+            </footer>
+        </body>
+    </html>`;
 
     // Create a Blob from the HTML content and trigger a download
     const blob = new Blob([htmlContent], { type: 'text/html' });
@@ -187,7 +229,8 @@ function exportPaymentDetailsAsHTML() {
     document.body.appendChild(link); // Required for FF
 
     link.click(); // This will download the file
+    URL.revokeObjectURL(url); // Release the URL object
 }
 
-// Call the function to export the details as HTML
-exportPaymentDetailsAsHTML();
+// Initialize the export button when the script loads
+createExportButton();
