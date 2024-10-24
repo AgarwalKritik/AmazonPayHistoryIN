@@ -51,7 +51,7 @@ The **Amazon India Payment Details Exporter** is a JavaScript utility that extra
 1. Go to the [Amazon India Payment History](https://www.amazon.in/pay/history) page.
 2. **Load All Transactions**: Scroll down the page to load all your transactions. Amazon initially displays only a portion of your payment history, so make sure to scroll until all transactions you want to export are visible.
 3. Click on "Export Payment History" button appearing at the bottom right corner of the webpage.
-7. If transactions are found, an HTML file will be automatically downloaded to your device.
+4. If transactions are found, an HTML file will be automatically downloaded to your device.
 
 ## Sample Output
 
