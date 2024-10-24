@@ -13,7 +13,7 @@
  * 2. Scroll down to load all transactions until the last transaction you want to export is visible.
  * 3. Open your browser's Developer Console (F12 or right-click → Inspect).
  * 4. Copy and paste this script into the console and press Enter.
- * 5. An HTML file containing the payment details will be downloaded automatically.
+ * 5. Click the "Export Payment History" button to download the HTML file.
  *
  * @note 
  * Ensure that you are logged into your Amazon account to access the payment history.
@@ -23,7 +23,27 @@
  * - v1.0.0 - Initial release.
  */
 
+// Function to create an export button on the page
+function createExportButton() {
+    const button = document.createElement('button');
+    button.innerText = 'Export Payment History';
+    button.style.position = 'fixed'; // Fixed position to stay in view while scrolling
+    button.style.bottom = '20px';
+    button.style.right = '20px';
+    button.style.padding = '10px';
+    button.style.backgroundColor = '#232f3e'; // Amazon Gray
+    button.style.color = '#ffffff'; // White text color
+    button.style.border = 'none';
+    button.style.borderRadius = '5px';
+    button.style.cursor = 'pointer';
+    button.style.zIndex = 1000; // Ensure it appears above other content
 
+    document.body.appendChild(button);
+
+    button.addEventListener('click', exportPaymentDetailsAsHTML);
+}
+
+// Function to extract and export payment transaction details as an HTML file
 function exportPaymentDetailsAsHTML() {
     const transactionElements = document.querySelectorAll('.a-expander-container');
 
@@ -167,27 +187,24 @@ function exportPaymentDetailsAsHTML() {
                 </tr>`;
     });
 
-    // Add footer to the HTML content
-    const currentDate = new Date().toLocaleDateString();
+    // Close the table and add a footer
     htmlContent += `
                 </table>
-                <footer>
-                    <p>Exported on: ${currentDate}</p>
-                    <p>AmazonPayHistoryIN - <a href="https://github.com/dishapatel010/AmazonPayHistoryIN" target="_blank">@dishapatel010</a></p>
-                </footer>
+                <footer>Generated on ${new Date().toLocaleString()}</footer>
             </body>
         </html>`;
 
-    // Create a Blob from the HTML content and trigger a download
+    // Create a Blob from the HTML content and trigger download
     const blob = new Blob([htmlContent], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "payment_details.html");
-    document.body.appendChild(link); // Required for FF
-
-    link.click(); // This will download the file
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'payment_transaction_details.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url); // Release the URL object
 }
 
-// Call the function to export the details as HTML
-exportPaymentDetailsAsHTML();
+// Initialize the export button when the script loads
+createExportButton();
