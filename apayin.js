@@ -8,12 +8,12 @@
  * @author Nikhil - @dishapatel010
  *
  * @usage
- * 1. Navigate to the Amazon India Payment History page: 
+ * 1. Ensure the Amazon Pay India History Exporter extension is installed in your browser.
+ * 2. Navigate to the Amazon India Payment History page: 
  *    https://www.amazon.in/pay/history
- * 2. Scroll down to load all transactions until the last transaction you want to export is visible.
- * 3. Open your browser's Developer Console (F12 or right-click → Inspect).
- * 4. Copy and paste this script into the console and press Enter.
- * 5. Click the "Export Payment History" button to download the HTML file.
+ * 3. Scroll down to load all transactions until the last transaction you want to export is visible.
+ * 4. Click on the "Export Payment History" button provided by the extension.
+ * 5. The script will automatically extract the payment history and prompt you to download it as an HTML file.
  *
  * @note 
  * Ensure that you are logged into your Amazon account to access the payment history.
