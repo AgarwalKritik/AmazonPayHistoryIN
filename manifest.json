@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Amazon Pay History Fetcher",
+    "name": "Amazon Pay India History Fetcher",
     "version": "1.0",
-    "description": "Fetch Amazon Pay History automatically.",
+    "description": "Fetch Amazon Pay India History automatically.",
     "permissions": [
         "activeTab",
         "scripting"
