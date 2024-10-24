@@ -16,14 +16,41 @@ The **Amazon India Payment Details Exporter** is a JavaScript utility that extra
 - Generates an HTML file containing the transaction data.
 - Responsive design for better viewing on different devices.
 
+## Setup
+
+### _Google Chrome_
+1. Launch the Google Chrome browser.
+2. Access Extensions Page:
+   2.1 Click on the three vertical dots (menu) in the upper right corner.
+   2.2 Go to More Tools > Extensions.
+3. Enable Developer Mode: In the upper right corner of the Extensions page, toggle the Developer mode switch to ON.
+4. Load Unpacked Extension:
+   4.1 Click on the Load unpacked button.
+   4.2 Navigate to the folder where your extension files (like manifest.json, popup.html, etc.) are located.
+   4.3 Select the folder and click Open.
+5. Your extension should now appear in the list of installed extensions. You can click on the icon to test it.
+
+ ------
+ 
+### _Mozilla Firefox_
+1. Launch the Mozilla Firefox browser.
+2. Access Add-ons Manager:
+   2.1 Click on the three horizontal lines (menu) in the upper right corner.
+   2.2 Select Add-ons and Themes.
+3. Enable Debugging:
+   3.1 In the Add-ons Manager, click on the gear icon (⚙️) in the top right corner.
+   3.2 Select Debug Add-ons.
+4. Load Temporary Add-on:
+   4.1 Click on the Load Temporary Add-on button.
+   4.2 Navigate to the folder where your extension files are located.
+   4.3 Select any file (e.g., manifest.json) and click Open.
+5. Your extension will now be loaded temporarily, and you can test it directly from the browser.
+
 ## Usage
 
 1. Go to the [Amazon India Payment History](https://www.amazon.in/pay/history) page.
 2. **Load All Transactions**: Scroll down the page to load all your transactions. Amazon initially displays only a portion of your payment history, so make sure to scroll until all transactions you want to export are visible.
-3. Open your browser's Developer Tools (press `F12` or `Ctrl+Shift+I`).
-4. Navigate to the **Console** tab.
-5. Copy the contents of the `apayin.js` file and paste it into the console.
-6. Press `Enter` to run the script.
+3. Click on "Export Payment History" button appearing at the bottom right corner of the webpage.
 7. If transactions are found, an HTML file will be automatically downloaded to your device.
 
 ## Sample Output
